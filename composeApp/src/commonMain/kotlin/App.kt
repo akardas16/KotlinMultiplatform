@@ -16,12 +16,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
+import networking.Network
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import utility.bounceClick
@@ -32,11 +35,23 @@ fun App() {
     MaterialTheme {
         var greetingText by remember { mutableStateOf("Hello World!") }
         var showImage by remember { mutableStateOf(false) }
+        val scope = rememberCoroutineScope()
         Column(Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center) {
 
-            Card(modifier = Modifier.bounceClick(0.96f) {  },shape = CircleShape, elevation = 8.dp,
+            Card(modifier = Modifier.bounceClick(0.96f) {
+                scope.launch {
+                   Network.shared.fetchData { response, error ->
+                       response?.let {data->
+                           Log.i("sddsfsdfsdf",data[0].image)
+                       }
+                   }
+
+                }
+
+
+            },shape = CircleShape, elevation = 8.dp,
                 backgroundColor = Color.Blue){
                 Text(text = "Click Me", color = Color(0xffffa601),
                     modifier = Modifier.padding(horizontal = 45.dp, vertical = 8.dp), fontWeight = FontWeight.SemiBold)
