@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.compose.ExperimentalComposeLibrary
 
 plugins {
@@ -34,7 +33,15 @@ kotlin {
             implementation(libs.compose.ui)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.kotlinx.coroutines.android)
+            implementation(libs.ktor.client.okhttp)
+
         }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -44,6 +51,7 @@ kotlin {
 
             api(libs.logging)
             implementation(libs.kotlinx.coroutines.core)
+
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
@@ -88,6 +96,8 @@ android {
     }
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
+        debugImplementation(libs.library)
+        releaseImplementation(libs.library.no.op)
     }
 }
 
