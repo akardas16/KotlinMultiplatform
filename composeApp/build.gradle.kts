@@ -55,6 +55,18 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
+
+
+
+            // Multiplatform
+            // Navigator
+            implementation(libs.voyager.navigator)
+            // BottomSheetNavigator
+            implementation(libs.voyager.bottom.sheet.navigator)
+            // TabNavigator
+            implementation(libs.voyager.tab.navigator)
+            // Transitions
+            implementation(libs.voyager.transitions)
         }
     }
 }

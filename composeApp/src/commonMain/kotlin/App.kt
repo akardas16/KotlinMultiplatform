@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
 import kotlinx.coroutines.launch
 import networking.Network
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -57,6 +58,8 @@ fun App() {
                     modifier = Modifier.padding(horizontal = 45.dp, vertical = 8.dp), fontWeight = FontWeight.SemiBold)
             }
 
+            Text(text = platformName().name.name)
+
             Button(onClick = {
                 greetingText = "Compose: ${Greeting().greet()}"
                 showImage = !showImage
@@ -71,4 +74,12 @@ fun App() {
             }
         }
     }
+}
+
+class HomeScreen:Screen{
+    @Composable
+    override fun Content() {
+        App()
+    }
+
 }

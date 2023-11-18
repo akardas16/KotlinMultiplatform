@@ -41,3 +41,7 @@ import androidx.compose.ui.graphics.graphicsLayer
             onClick()
         }
 }
+
+enum class ActualPlatform{
+    IOS,ANDROID
+}
