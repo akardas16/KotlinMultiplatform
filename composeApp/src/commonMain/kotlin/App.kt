@@ -20,10 +20,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import kotlinx.coroutines.launch
 import networking.Network
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -37,14 +41,20 @@ fun App() {
         var greetingText by remember { mutableStateOf("Hello World!") }
         var showImage by remember { mutableStateOf(false) }
         val scope = rememberCoroutineScope()
+        var url by remember { mutableStateOf("") }
         Column(Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center) {
 
+            KamelImage(resource = asyncPainterResource(data = url),contentDescription = null,
+                contentScale = ContentScale.Crop,modifier = Modifier.size(180.dp).clip(
+                    RoundedCornerShape(16.dp)
+                ))
             Card(modifier = Modifier.bounceClick(0.96f) {
                 scope.launch {
                    Network.shared.fetchData { response, error ->
                        response?.let {data->
+                           url = data[0].image
                            Log.i("sddsfsdfsdf",data[0].image)
                        }
                    }
